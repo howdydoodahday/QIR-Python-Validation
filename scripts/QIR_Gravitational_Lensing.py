@@ -16,6 +16,13 @@ if use_real_data:
     
     predicted_lensing = [lensing_effect(m, d, 0.05) for m, d in zip(observed_masses, observed_distances)]
     
+    # Save results to TXT file
+    with open("output_lensing_comparison.txt", "w") as file:
+        file.write("Observed Data vs. QIR Predictions\n")
+        file.write("Mass (Solar Masses) | Distance (Units) | Observed Lensing | QIR-Predicted Lensing\n")
+        for m, d, ol, pl in zip(observed_masses, observed_distances, observed_lensing, predicted_lensing):
+            file.write(f"{m:.2f} | {d:.2f} | {ol:.4f} | {pl:.4f}\n")
+
     # Plot real vs. simulated data
     plt.scatter(observed_distances, observed_lensing, color='red', label="Observed Lensing")
     plt.scatter(observed_distances, predicted_lensing, color='blue', label="QIR-Predicted Lensing")
@@ -24,8 +31,8 @@ if use_real_data:
     plt.title("QIR Gravitational Lensing vs. Observed Data")
     plt.legend()
     plt.savefig("output_lensing_comparison.png")
-    
-    print("Comparison plot saved as 'output_lensing_comparison.png'")
+
+    print("Results saved as 'output_lensing_comparison.txt' and 'output_lensing_comparison.png'")
 else:
     mass = 1.0  # Solar masses
     distance = 100  # Arbitrary units

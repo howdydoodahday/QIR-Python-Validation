@@ -16,7 +16,7 @@ qir_predicted_values = {
 
 # Corresponding mass, distance, and information density values
 masses = np.array([1.2, 1.5, 1.8])  # Mass in solar masses for lensing and entropy
- distances = np.array([110, 95, 130])  # Distances for lensing
+distances = np.array([110, 95, 130])  # Distances for lensing
 information_density = np.array([0.04, 0.05, 0.06])  # Information density values for uncertainty
 
 # Define the balancing equation model

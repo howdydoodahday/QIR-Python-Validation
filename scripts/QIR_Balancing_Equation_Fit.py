@@ -36,7 +36,7 @@ d_all = np.concatenate((distances, distances, distances))
 I_all = np.concatenate((information_density, information_density, information_density))
 
 # Perform least squares optimization to fit C, a, b, c
-optimal_params, _ = opt.least_squares(balancing_equation, initial_guess, args=(m_all, d_all, I_all, predicted_data)).x
+optimal_params = opt.least_squares(balancing_equation, initial_guess, args=(m_all, d_all, I_all, predicted_data)).x
 C_opt, a_opt, b_opt, c_opt = optimal_params
 
 # Display results

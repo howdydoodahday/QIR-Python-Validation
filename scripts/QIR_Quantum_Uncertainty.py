@@ -1,39 +1,39 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Function that models quantum uncertainty with QIR
+# QIR Quantum Uncertainty Model
 def quantum_uncertainty(position_uncertainty, information_density):
     return (1 / information_density) * position_uncertainty  # Placeholder equation
 
-# Define parameters
-position_uncertainty = 1.0  # Arbitrary units
-information_density = 0.05  # QIR correction term
+# Allow user input of real-world data
+use_real_data = input("Use real-world data? (yes/no): ").strip().lower() == "yes"
 
-# Run the model
-uncertainty_result = quantum_uncertainty(position_uncertainty, information_density)
-
-# Print basic output
-print(f"Quantum uncertainty effect: {uncertainty_result}")
-
-# Optional: Save results to file and generate plot
-save_output = True  # Change to False to disable file output
-
-if save_output:
-    # Save numerical results to a text file
-    with open("output_uncertainty.txt", "w") as file:
-        file.write(f"Position Uncertainty: {position_uncertainty}\n")
-        file.write(f"Information Density: {information_density}\n")
-        file.write(f"Quantum Uncertainty Effect: {uncertainty_result}\n")
+if use_real_data:
+    # Example: Quantum fluctuation data from LHC or NIST
+    observed_uncertainties = np.array([0.2, 0.15, 0.1])  # Replace with actual dataset values
+    observed_information_density = np.array([0.04, 0.05, 0.06])  # Replace with actual dataset values
+    observed_results = np.array([5.0, 3.0, 2.5])  # Replace with real uncertainty values
     
-    # Generate and save plot
-    densities = np.linspace(0.01, 0.1, 100)
-    uncertainty_values = [quantum_uncertainty(position_uncertainty, d) for d in densities]
+    predicted_results = [quantum_uncertainty(u, d) for u, d in zip(observed_uncertainties, observed_information_density)]
     
-    plt.plot(densities, uncertainty_values, label="QIR Quantum Uncertainty")
+    # Save results to TXT file
+    with open("output_uncertainty_comparison.txt", "w") as file:
+        file.write("Observed Data vs. QIR Predictions\n")
+        file.write("Position Uncertainty | Information Density | Observed Uncertainty | QIR-Predicted Uncertainty\n")
+        for ou, od, orr, pr in zip(observed_uncertainties, observed_information_density, observed_results, predicted_results):
+            file.write(f"{ou:.2f} | {od:.2f} | {orr:.4f} | {pr:.4f}\n")
+
+    # Plot real vs. simulated data
+    plt.scatter(observed_information_density, observed_results, color='red', label="Observed Quantum Uncertainty")
+    plt.scatter(observed_information_density, predicted_results, color='blue', label="QIR-Predicted Uncertainty")
     plt.xlabel("Information Density")
-    plt.ylabel("Uncertainty Effect")
-    plt.title("QIR Quantum Uncertainty Simulation")
+    plt.ylabel("Quantum Uncertainty Effect")
+    plt.title("QIR Quantum Uncertainty vs. Observed Data")
     plt.legend()
-    plt.savefig("output_uncertainty.png")
+    plt.savefig("output_uncertainty_comparison.png")
 
-    print("Results saved as 'output_uncertainty.txt' and 'output_uncertainty.png'")
+    print("Results saved as 'output_uncertainty_comparison.txt' and 'output_uncertainty_comparison.png'")
+else:
+    position_uncertainty = 1.0  # Arbitrary units
+    information_density = 0.05  # QIR correction term
+    print(f"Quantum uncertainty effect: {quantum_uncertainty(position_uncertainty, information_density)}")
